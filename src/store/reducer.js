@@ -14,7 +14,6 @@ export const initialState = {
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
 		case actionTypes.CREATE_TRANSACTION:
-			console.log('blocks changed: ', state.blocks);
 			const blockFind = state.blocks;
 			
 				blockFind.forEach(function(obj, index) {
@@ -22,7 +21,6 @@ export const reducer = (state = initialState, action) => {
 					
 					if (obj.addressFrom === action.transaction.addressFrom) {
 						if (index === 0) {
-							console.log('Index caught at 0.');
 							if (obj.previousHash !== state.blocks[0].previousHash) {
 								console.log('Chain is invalid for the first account sending.');
 								return action.transaction.amount = 0;
@@ -31,13 +29,8 @@ export const reducer = (state = initialState, action) => {
 							}
 						}
 						if (index !== 0) {
-							console.log('Index caught at above 0.');
 							const prevIndex = index - 1;
-							console.log('prevIndex: ', prevIndex);
 							const previousHashHere = state.blocks[prevIndex];
-							console.log('previousHash block: ', previousHashHere);
-							console.log('obj.previousHash: ', obj.previousHash);
-							console.log('hash of previous: ', previousHashHere.hash);
 								if (obj.previousHash !== previousHashHere.hash) {
 									console.log('Chain for the sending account is invalid.');
 									return action.transaction.amount = 0;
@@ -46,16 +39,13 @@ export const reducer = (state = initialState, action) => {
 								}
 						}
 						const newBalance = obj.balance - action.transaction.amount;
-						console.log('newBalance:', newBalance);
 						obj.balance = newBalance;
-						console.log('Sending account with a new balance: ', obj);
 					}
 					
 					
 					
 					if (obj.addressFrom === action.transaction.addressTo) {
 						if (index === 0) {
-							console.log('Index caught at 0.');
 							if (obj.previousHash !== state.blocks[0].previousHash) {
 								console.log('Chain is invalid for the first account receiving.');
 								return action.transaction.amount = 0;
@@ -64,13 +54,8 @@ export const reducer = (state = initialState, action) => {
 							}
 						}
 						if (index !== 0) {
-							console.log('Index caught at above 0.');
 							const prevIndex = index - 1;
-							console.log('prevIndex: ', prevIndex);
 							const previousHashHere = state.blocks[prevIndex];
-							console.log('previousHash block: ', previousHashHere);
-							console.log('obj.previousHash: ', obj.previousHash);
-							console.log('hash of previous: ', previousHashHere.hash);
 								if (obj.previousHash !== previousHashHere.hash) {
 									console.log('Chain for the receiving account is invalid.');
 									return action.transaction.amount = 0;
@@ -79,9 +64,7 @@ export const reducer = (state = initialState, action) => {
 								}
 						}
 						const newBalance = obj.balance + action.transaction.amount;
-						console.log('newBalance:', newBalance);
 						obj.balance = newBalance;
-						console.log('Receiving account with a new balance: ', obj);
 					}
 					
 					

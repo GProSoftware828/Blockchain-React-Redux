@@ -11,7 +11,6 @@ import {
 export class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
   }
 	
 		transaction = (info) => {
@@ -24,20 +23,14 @@ export class App extends React.Component {
 			const Cryptr = require('cryptr');
 			const cryptr = new Cryptr('myTotalySecretKey');
 			const encryptedString = cryptr.encrypt(`${timeNow}` + `${timeNow}` + `${timeNow}`);
-			//const decryptedString = cryptr.decrypt(encryptedString);
-			//console.log(encryptedString);
-			//console.log(decryptedString); 
 			this.props.createBlock(encryptedString);	
 		}
 
   render() {
-    //const { blocks } = this.state;
     const { blocks } = this.props;
     return (
       <div>
 				<div className="account-button" onClick={() => this.addBlock()}>Give me an account!</div>
-				{console.log('block in state: ', this.state.block)}
-				{console.log('block in store: ', blocks)}
 				<div className="block">
   				<table className="center-table">
    		 			<tbody>
